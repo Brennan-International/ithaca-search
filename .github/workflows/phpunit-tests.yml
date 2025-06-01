@@ -25,11 +25,14 @@ jobs:
         run: git config --global --add safe.directory /app
       
       - uses: php-actions/composer@v6
-      
+
       - uses: actions/setup-node@v4
 
       - name: "Install npm deps"
         run: npm ci
+
+      - name: Install wp-env globally
+        run: npm install -g @wordpress/env
 
       - name: "Start wp-env environment"
         run: npm run wp-env:start
