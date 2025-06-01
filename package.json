@@ -1,0 +1,56 @@
+{
+  "name": "ithaca-search",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "storybook": "storybook dev -p 6006 -c .storybook",
+    "build-storybook": "storybook build -c .storybook -o storybook-static",
+    "build": "wp-scripts build",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "format": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:md:docs": "wp-scripts lint-md-docs",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "packages-update": "wp-scripts packages-update",
+    "plugin-zip": "wp-scripts plugin-zip",
+    "start": "wp-scripts start",
+    "wp-env:start": "wp-env start --xdebug",
+    "test:e2e": "wp-scripts test-e2e",
+    "test:jest": "wp-scripts test-unit-js",
+    "test:phpunit": "wp-env run tests-cli --env-cwd=wp-content/plugins/ithaca-search ./vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage --coverage-filter src --log-junit=test-results.xml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brennan-International/ithaca-search.git"
+  },
+  "author": "Brennan Butler",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Brennan-International/ithaca-search/issues"
+  },
+  "homepage": "https://github.com/Brennan-International/ithaca-search#readme",
+  "devDependencies": {
+    "@automattic/isolated-block-editor": "^2.29.0",
+    "@storybook/addon-a11y": "^9.0.1",
+    "@storybook/react-webpack5": "^9.0.1",
+    "@types/jest": "^29.5.14",
+    "@types/webpack-env": "^1.18.8",
+    "@wordpress/jest-preset-default": "^12.24.0",
+    "@wordpress/scripts": "^30.17.0",
+    "browserslist": "^4.25.0",
+    "css-loader": "^7.1.2",
+    "jest": "^29.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.89.1",
+    "sass-loader": "^16.0.5",
+    "storybook": "^9.0.1",
+    "style-loader": "^4.0.0",
+    "ts-jest": "^29.3.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

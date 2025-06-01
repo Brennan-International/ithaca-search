@@ -1,0 +1,37 @@
+{
+  "name": "brennan-international/ithaca-search",
+  "description": "A powerful federated search plugin.",
+  "type": "wordpress-plugin",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Brennan Butler",
+      "homepage": "https://github.com/Brennan-International/ithaca-search/",
+      "role": "Developer"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^9.0",
+    "yoast/phpunit-polyfills": "^2.0",
+    "wp-coding-standards/wpcs": "^3.0",
+    "php-stubs/woocommerce-stubs": "^9.5",
+    "php-stubs/wordpress-tests-stubs": "^6.7",
+    "woocommerce/woocommerce-sniffs": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "IthacaSearch\\": "src/"
+    }
+  },
+  "support": {
+    "issues": "https://github.com/Brennan-International/ithaca-search/issues",
+    "source": "https://github.com/Brennan-International/ithaca-search/"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}

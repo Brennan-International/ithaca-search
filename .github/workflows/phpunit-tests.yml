@@ -1,0 +1,47 @@
+name: PHPUnit tests
+
+# Run PHPUnit tests on every pull request and push to the staging or main/master branch
+on:
+  push:
+    branches:
+      - staging
+      - main
+      - master
+
+  pull_request:
+    branchess:
+      - staging
+      - main
+      - master
+
+jobs:
+  run-phpunit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6
+      - uses: actions/setup-node@v4
+      - uses: php-actions/phpunit@v3
+
+      - name: "Install composer deps"
+        run: composer install
+
+      - name: "Install npm deps"
+        run: npm ci
+
+      - name: "Start wp-env environment"
+        run: npm run wp-env:start
+
+      - name: "Run PHPUnit tests"
+        run: |
+          npm run test:phpunit
+          echo "## PHPUnit Results" >> $GITHUB_STEP_SUMMARY
+          if [ -f test-results.xml ]; then
+            ERRORS=$(grep -o 'errors="[^"]*"' test-results.xml | cut -d'"' -f2)
+            FAILURES=$(grep -o 'failures="[^"]*"' test-results.xml | cut -d'"' -f2)
+            TESTS=$(grep -o 'tests="[^"]*"' test-results.xml | cut -d'"' -f2)
+            echo "**Tests**: $TESTS  \n**Failures**: $FAILURES  \n**Errors**: $ERRORS" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No test results found." >> $GITHUB_STEP_SUMMARY
+          fi

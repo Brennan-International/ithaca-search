@@ -1,0 +1,1 @@
+importAll(require.context( './blocks', true, /frontend\.js$/ ))

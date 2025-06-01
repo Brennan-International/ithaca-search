@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="1" assertions="1" errors="0" warnings="0" failures="1" skipped="0" time="0.013837">
+    <testsuite name="default" tests="1" assertions="1" errors="0" warnings="0" failures="1" skipped="0" time="0.013837">
+      <testsuite name="IthacaSearch\Tests\TestExample" file="/var/www/html/wp-content/plugins/ithaca-search/tests/phpunit/test_example_test.php" tests="1" assertions="1" errors="0" warnings="0" failures="1" skipped="0" time="0.013837">
+        <testcase name="testExample" class="IthacaSearch\Tests\TestExample" classname="IthacaSearch.Tests.TestExample" file="/var/www/html/wp-content/plugins/ithaca-search/tests/phpunit/test_example_test.php" line="25" assertions="1" time="0.013837">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">IthacaSearch\Tests\TestExample::testExample
+Failed asserting that false is true.
+
+/var/www/html/wp-content/plugins/ithaca-search/tests/phpunit/test_example_test.php:26</failure>
+        </testcase>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
