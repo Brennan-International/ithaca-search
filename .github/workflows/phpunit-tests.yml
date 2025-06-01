@@ -41,19 +41,25 @@ jobs:
       - name: "Run PHPUnit tests"
         run: |
           set +e
+
+          # Run the test and capture exit code
           npm run test:phpunit
           TEST_EXIT_CODE=$?
+
+          # Restore default behavior
           set -e
 
           echo "## PHPUnit Results" >> $GITHUB_STEP_SUMMARY
 
-          if [ -f test-results.xml ]; then
-            ERRORS=$(grep -o 'errors="[^"]*"' test-results.xml | cut -d'"' -f2)
-            FAILURES=$(grep -o 'failures="[^"]*"' test-results.xml | cut -d'"' -f2)
-            TESTS=$(grep -o 'tests="[^"]*"' test-results.xml | cut -d'"' -f2)
+          # Ensure path is correct relative to where `test-results.xml` ends up
+          if [ -f wp-content/plugins/ithaca-search/test-results.xml ]; then
+            ERRORS=$(grep -o 'errors="[^"]*"' wp-content/plugins/ithaca-search/test-results.xml | cut -d'"' -f2)
+            FAILURES=$(grep -o 'failures="[^"]*"' wp-content/plugins/ithaca-search/test-results.xml | cut -d'"' -f2)
+            TESTS=$(grep -o 'tests="[^"]*"' wp-content/plugins/ithaca-search/test-results.xml | cut -d'"' -f2)
             echo "**Tests**: $TESTS  \n**Failures**: $FAILURES  \n**Errors**: $ERRORS" >> $GITHUB_STEP_SUMMARY
           else
             echo "No test results found." >> $GITHUB_STEP_SUMMARY
           fi
 
+          # Re-throw the PHPUnit exit code so the job still fails if tests fail
           exit $TEST_EXIT_CODE
