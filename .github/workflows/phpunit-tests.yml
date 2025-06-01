@@ -25,11 +25,8 @@ jobs:
         run: git config --global --add safe.directory /app
       
       - uses: php-actions/composer@v6
+      
       - uses: actions/setup-node@v4
-      - uses: php-actions/phpunit@v3
-
-      - name: "Install composer deps"
-        run: composer install
 
       - name: "Install npm deps"
         run: npm ci
