@@ -40,8 +40,13 @@ jobs:
 
       - name: "Run PHPUnit tests"
         run: |
+          set +e
           npm run test:phpunit
+          TEST_EXIT_CODE=$?
+          set -e
+
           echo "## PHPUnit Results" >> $GITHUB_STEP_SUMMARY
+
           if [ -f test-results.xml ]; then
             ERRORS=$(grep -o 'errors="[^"]*"' test-results.xml | cut -d'"' -f2)
             FAILURES=$(grep -o 'failures="[^"]*"' test-results.xml | cut -d'"' -f2)
@@ -50,3 +55,5 @@ jobs:
           else
             echo "No test results found." >> $GITHUB_STEP_SUMMARY
           fi
+
+          exit $TEST_EXIT_CODE
