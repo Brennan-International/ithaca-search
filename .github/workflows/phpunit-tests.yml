@@ -31,6 +31,7 @@ jobs:
       - name: "Install npm deps"
         run: npm ci
 
+      # todo: change this to local
       - name: Install wp-env globally
         run: npm install -g @wordpress/env
 

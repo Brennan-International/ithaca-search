@@ -1,7 +1,6 @@
 {
   "plugins": [
     "./",
-    "../ithaca-search-integration",
     "https://downloads.wordpress.org/plugin/gutenberg.19.9.0.zip",
     "https://downloads.wordpress.org/plugin/woocommerce.9.4.3.zip",
     "https://downloads.wordpress.org/plugin/advanced-custom-fields.6.3.12.zip"
