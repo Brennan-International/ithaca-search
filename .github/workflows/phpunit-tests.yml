@@ -38,15 +38,28 @@ jobs:
       - name: "Start wp-env environment"
         run: npm run wp-env:start
 
-      - name: "Run PHPUnit tests"
+      - name: Run PHPUnit tests and collect results
         run: |
+          set +e
           npm run test:phpunit
-          echo "## PHPUnit Results" >> $GITHUB_STEP_SUMMARY
-          if [ -f test-results.xml ]; then
-            ERRORS=$(grep -o 'errors="[^"]*"' test-results.xml | cut -d'"' -f2)
-            FAILURES=$(grep -o 'failures="[^"]*"' test-results.xml | cut -d'"' -f2)
-            TESTS=$(grep -o 'tests="[^"]*"' test-results.xml | cut -d'"' -f2)
-            echo "**Tests**: $TESTS  \n**Failures**: $FAILURES  \n**Errors**: $ERRORS" >> $GITHUB_STEP_SUMMARY
+          TEST_EXIT_CODE=$?
+          set -e
+
+          RESULTS_FILE="wp-content/plugins/ithaca-search/test-results.xml"
+
+          if [ -f "$RESULTS_FILE" ]; then
+            ERRORS=$(grep -o 'errors="[^"]*"' "$RESULTS_FILE" | head -n1 | cut -d'"' -f2)
+            FAILURES=$(grep -o 'failures="[^"]*"' "$RESULTS_FILE" | head -n1 | cut -d'"' -f2)
+            TESTS=$(grep -o 'tests="[^"]*"' "$RESULTS_FILE" | head -n1 | cut -d'"' -f2)
+
+            {
+              echo "## PHPUnit Results"
+              echo "**Tests**: $TESTS"
+              echo "**Failures**: $FAILURES"
+              echo "**Errors**: $ERRORS"
+            } >> $GITHUB_STEP_SUMMARY
           else
             echo "No test results found." >> $GITHUB_STEP_SUMMARY
           fi
+
+          exit $TEST_EXIT_CODE
