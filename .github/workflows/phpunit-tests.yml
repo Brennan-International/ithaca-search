@@ -45,13 +45,19 @@ jobs:
           TEST_EXIT_CODE=$?
           set -e
 
-          echo "## PHPUnit Results" >> $GITHUB_STEP_SUMMARY
+          RESULTS_FILE="wp-content/plugins/ithaca-search/test-results.xml"
 
-          if [ -f wp-content/plugins/ithaca-search/test-results.xml ]; then
-            ERRORS=$(grep -o 'errors="[^"]*"' wp-content/plugins/ithaca-search/test-results.xml | cut -d'"' -f2)
-            FAILURES=$(grep -o 'failures="[^"]*"' wp-content/plugins/ithaca-search/test-results.xml | cut -d'"' -f2)
-            TESTS=$(grep -o 'tests="[^"]*"' wp-content/plugins/ithaca-search/test-results.xml | cut -d'"' -f2)
-            echo "**Tests**: $TESTS  \n**Failures**: $FAILURES  \n**Errors**: $ERRORS" >> $GITHUB_STEP_SUMMARY
+          if [ -f "$RESULTS_FILE" ]; then
+            ERRORS=$(grep -o 'errors="[^"]*"' "$RESULTS_FILE" | head -n1 | cut -d'"' -f2)
+            FAILURES=$(grep -o 'failures="[^"]*"' "$RESULTS_FILE" | head -n1 | cut -d'"' -f2)
+            TESTS=$(grep -o 'tests="[^"]*"' "$RESULTS_FILE" | head -n1 | cut -d'"' -f2)
+
+            {
+              echo "## PHPUnit Results"
+              echo "**Tests**: $TESTS"
+              echo "**Failures**: $FAILURES"
+              echo "**Errors**: $ERRORS"
+            } >> $GITHUB_STEP_SUMMARY
           else
             echo "No test results found." >> $GITHUB_STEP_SUMMARY
           fi
