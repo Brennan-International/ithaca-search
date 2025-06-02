@@ -38,22 +38,19 @@ jobs:
       - name: "Start wp-env environment"
         run: npm run wp-env:start
 
-      - name: "Run PHPUnit tests"
+      - name: Run PHPUnit tests and collect results
         run: |
           set +e
           npm run test:phpunit
           TEST_EXIT_CODE=$?
           set -e
 
-          # Copy test results out of the container
-          docker cp $(docker ps --filter name=wordpress_phpunit_1 -q):/tmp/test-results.xml ./test-results.xml
-
           echo "## PHPUnit Results" >> $GITHUB_STEP_SUMMARY
 
-          if [ -f test-results.xml ]; then
-            ERRORS=$(grep -o 'errors="[^"]*"' test-results.xml | cut -d'"' -f2)
-            FAILURES=$(grep -o 'failures="[^"]*"' test-results.xml | cut -d'"' -f2)
-            TESTS=$(grep -o 'tests="[^"]*"' test-results.xml | cut -d'"' -f2)
+          if [ -f wp-content/plugins/ithaca-search/test-results.xml ]; then
+            ERRORS=$(grep -o 'errors="[^"]*"' wp-content/plugins/ithaca-search/test-results.xml | cut -d'"' -f2)
+            FAILURES=$(grep -o 'failures="[^"]*"' wp-content/plugins/ithaca-search/test-results.xml | cut -d'"' -f2)
+            TESTS=$(grep -o 'tests="[^"]*"' wp-content/plugins/ithaca-search/test-results.xml | cut -d'"' -f2)
             echo "**Tests**: $TESTS  \n**Failures**: $FAILURES  \n**Errors**: $ERRORS" >> $GITHUB_STEP_SUMMARY
           else
             echo "No test results found." >> $GITHUB_STEP_SUMMARY
